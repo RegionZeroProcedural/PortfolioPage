@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Keegan Labrot | Frontend Developer</title>
+
+  <link rel="stylesheet" href="style.css" />
+  <script type="module" src="script.js" defer></script>
+</head>
+
+<body>
+  <div class="ambient-bg" aria-hidden="true">
+  <div class="ambient-orb orb-one"></div>
+  <div class="ambient-orb orb-two"></div>
+  <div class="ambient-orb orb-three"></div>
+  <div class="ambient-orb orb-four"></div>
+</div>
+
+  <header class="site-header liquid-glass">
+    <div class="liquid-button gpu-liquid">
+      <a href="#home" class="logo">Keegan Labrot</a>
+    </div>
+
+    <button class="menu-toggle" aria-label="Open navigation">
+      ☰
+    </button>
+
+    <nav class="desktop-nav">
+      <a href="#about" class="liquid-button gpu-liquid">About</a>
+      <a href="#skills" class="liquid-button gpu-liquid">Skills</a>
+      <a href="#projects" class="liquid-button gpu-liquid">Projects</a>
+      <a href="#contact" class="liquid-button gpu-liquid">Contact</a>
+    </nav>
+  </header>
+
+  <nav class="mobile-nav liquid-glass">
+    <a href="#about" class="liquid-button gpu-liquid">About</a>
+    <a href="#skills" class="liquid-button gpu-liquid">Skills</a>
+    <a href="#projects" class="liquid-button gpu-liquid">Projects</a>
+    <a href="#contact" class="liquid-button gpu-liquid">Contact</a>
+  </nav>
+
+  <main>
+
+    <section id="home" class="hero">
+      <div class="hero-content">
+
+        <p class="eyebrow">Frontend Developer</p>
+
+        <h1>
+          I build responsive,<br />
+          user-focused websites.
+        </h1>
+
+        <p class="hero-text">
+          I create clean, modern web experiences using HTML, CSS,
+          and JavaScript, with a focus on responsive layouts,
+          interactive UI, and real-world usability.
+        </p>
+
+        <div class="hero-buttons">
+          <a href="#projects" class="btn primary-btn liquid-button gpu-liquid">
+            View Projects
+          </a>
+
+          <a href="#contact" class="btn secondary-btn liquid-button gpu-liquid">
+            Contact Me
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="about" class="section">
+
+      <div class="about-card liquid-glass gpu-liquid">
+
+        <h2>About Me</h2>
+
+        <p>
+          I am a frontend developer focused on building polished,
+          accessible, and responsive websites. My background in
+          game development and digital media gives me a strong eye
+          for visual design, interaction, and user engagement.
+        </p>
+
+      </div>
+
+    </section>
+
+    <section id="skills" class="section">
+
+      <h2>Skills</h2>
+
+      <div class="skills-grid">
+
+        <div class="skill-card liquid-glass gpu-liquid">
+          <span>HTML5</span>
+        </div>
+
+        <div class="skill-card liquid-glass gpu-liquid">
+          <span>CSS3</span>
+        </div>
+
+        <div class="skill-card liquid-glass gpu-liquid">
+          <span>JavaScript</span>
+        </div>
+
+        <div class="skill-card liquid-glass gpu-liquid">
+          <span>Responsive Design</span>
+        </div>
+
+        <div class="skill-card liquid-glass gpu-liquid">
+          <span>Git & GitHub</span>
+        </div>
+
+        <div class="skill-card liquid-glass gpu-liquid">
+          <span>UI Design</span>
+        </div>
+
+        <div class="skill-card liquid-glass gpu-liquid">
+          <span>DOM Manipulation</span>
+        </div>
+
+        <div class="skill-card liquid-glass gpu-liquid">
+          <span>Web Accessibility</span>
+        </div>
+
+      </div>
+
+    </section>
+
+    <section id="projects" class="section">
+
+      <h2>Projects</h2>
+
+      <div class="projects-grid">
+
+        <article class="project-card liquid-glass gpu-liquid">
+
+          <h3>Region Zero Website</h3>
+
+          <p>
+            A responsive promotional website for an indie game project
+            featuring multiple pages, styled navigation, content
+            sections, and a polished visual identity.
+          </p>
+
+          <div class="project-tags">
+            <span>HTML</span>
+            <span>CSS</span>
+            <span>Responsive Design</span>
+          </div>
+
+          <a href="#" class="project-link">
+            View Project
+          </a>
+
+        </article>
+
+        <article class="project-card liquid-glass gpu-liquid">
+
+          <h3>Interactive UI Components</h3>
+
+          <p>
+            A collection of frontend components including buttons,
+            cards, menus, animations, and responsive layouts built
+            with clean reusable code.
+          </p>
+
+          <div class="project-tags">
+            <span>JavaScript</span>
+            <span>CSS</span>
+            <span>UI</span>
+          </div>
+
+          <a href="#" class="project-link">
+            View Project
+          </a>
+
+        </article>
+
+      </div>
+
+    </section>
+
+    <section id="contact" class="section">
+
+      <h2>Let's Build Something Great Together</h2>
+
+      <p class="contact-intro">
+        I'm actively pursuing frontend development opportunities
+        and am passionate about creating modern, responsive,
+        and engaging web experiences.
+      </p>
+
+      <p class="contact-intro">
+        Whether you're looking for a developer, have a project
+        in mind, or simply want to connect, I'd love to hear
+        from you.
+      </p>
+
+      <form class="contact-form liquid-glass gpu-liquid">
+
+        <label for="name">Name</label>
+
+        <input
+          type="text"
+          id="name"
+          name="name"
+          placeholder="Your name"
+          required
+        />
+
+        <label for="email">Email</label>
+
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="your@email.com"
+          required
+        />
+
+        <label for="message">Message</label>
+
+        <textarea
+          id="message"
+          name="message"
+          placeholder="Your message"
+          required
+        ></textarea>
+
+        <button
+          type="submit"
+          class="btn primary-btn liquid-button gpu-liquid"
+        >
+          Send Message
+        </button>
+
+      </form>
+
+      <div class="contact-links">
+        <a href="mailto:Klab2026.999@gmail.com">Email</a>
+        <a href="https://github.com/regionzeroprocedural" target="_blank">GitHub</a>
+        <a href="#">LinkedIn</a>
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer class="site-footer liquid-glass gpu-liquid">
+
+    <div class="footer-content">
+
+      <h3>Keegan Labrot</h3>
+
+      <p>
+        Frontend Developer focused on creating responsive,
+        accessible, and engaging web experiences.
+      </p>
+
+      <div class="footer-links">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </div>
+
+      <div class="footer-socials">
+        <a href="mailto:Klab2026.999@gmail.com">Email</a>
+        <a href="https://github.com/regionzeroprocedural" target="_blank">GitHub</a>
+        <a href="#">LinkedIn</a>
+      </div>
+
+      <div class="footer-divider"></div>
+
+      <p class="copyright">
+        © 2026 Keegan Labrot. All Rights Reserved.
+      </p>
+
+    </div>
+
+  </footer>
+
+</body>
+</html>
