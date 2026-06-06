@@ -11,12 +11,21 @@
 </head>
 
 <body>
+  <!-- Full-screen animated background -->
+  <video class="site-video-bg" autoplay muted loop playsinline preload="auto" poster="images/background-poster.jpg">
+    <source src="video/background.webm" type="video/webm">
+    <source src="video/background.mp4" type="video/mp4">
+  </video>
+
+  <div class="site-bg-overlay" aria-hidden="true"></div>
+
+
   <div class="ambient-bg" aria-hidden="true">
-  <div class="ambient-orb orb-one"></div>
-  <div class="ambient-orb orb-two"></div>
-  <div class="ambient-orb orb-three"></div>
-  <div class="ambient-orb orb-four"></div>
-</div>
+    <div class="ambient-orb orb-one"></div>
+    <div class="ambient-orb orb-two"></div>
+    <div class="ambient-orb orb-three"></div>
+    <div class="ambient-orb orb-four"></div>
+  </div>
 
   <header class="site-header liquid-glass">
     <div class="liquid-button gpu-liquid">
@@ -43,7 +52,6 @@
   </nav>
 
   <main>
-
     <section id="home" class="hero">
       <div class="hero-content">
 
@@ -74,9 +82,7 @@
     </section>
 
     <section id="about" class="section">
-
       <div class="about-card liquid-glass gpu-liquid">
-
         <h2>About Me</h2>
 
         <p>
@@ -85,17 +91,13 @@
           game development and digital media gives me a strong eye
           for visual design, interaction, and user engagement.
         </p>
-
       </div>
-
     </section>
 
     <section id="skills" class="section">
-
       <h2>Skills</h2>
 
       <div class="skills-grid">
-
         <div class="skill-card liquid-glass gpu-liquid">
           <span>HTML5</span>
         </div>
@@ -127,19 +129,14 @@
         <div class="skill-card liquid-glass gpu-liquid">
           <span>Web Accessibility</span>
         </div>
-
       </div>
-
     </section>
 
     <section id="projects" class="section">
-
       <h2>Projects</h2>
 
       <div class="projects-grid">
-
         <article class="project-card liquid-glass gpu-liquid">
-
           <h3>Region Zero Website</h3>
 
           <p>
@@ -157,11 +154,9 @@
           <a href="#" class="project-link">
             View Project
           </a>
-
         </article>
 
         <article class="project-card liquid-glass gpu-liquid">
-
           <h3>Interactive UI Components</h3>
 
           <p>
@@ -179,15 +174,11 @@
           <a href="#" class="project-link">
             View Project
           </a>
-
         </article>
-
       </div>
-
     </section>
 
     <section id="contact" class="section">
-
       <h2>Let's Build Something Great Together</h2>
 
       <p class="contact-intro">
@@ -203,7 +194,6 @@
       </p>
 
       <form class="contact-form liquid-glass gpu-liquid">
-
         <label for="name">Name</label>
 
         <input
@@ -239,23 +229,18 @@
         >
           Send Message
         </button>
-
       </form>
 
       <div class="contact-links">
-        <a href="mailto:Klab2026.999@gmail.com"><i class="fa-solid fa-at"></i></a>
-        <a href="https://github.com/regionzeroprocedural" target="_blank"><i class="fa-brands fa-github"></i></a>
-        <a href="#"><i class="fa-brands fa-square-linkedin"></i></a>
+        <a href="mailto:Klab2026.999@gmail.com" aria-label="Email"><i class="fa-solid fa-at"></i></a>
+        <a href="https://github.com/regionzeroprocedural" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-square-linkedin"></i></a>
       </div>
-
     </section>
-
   </main>
 
   <footer class="site-footer liquid-glass gpu-liquid">
-
     <div class="footer-content">
-
       <h3>Keegan Labrot</h3>
 
       <p>
@@ -272,7 +257,7 @@
 
       <div class="footer-socials">
         <a href="mailto:Klab2026.999@gmail.com">Email</a>
-        <a href="https://github.com/regionzeroprocedural" target="_blank">GitHub</a>
+        <a href="https://github.com/regionzeroprocedural" target="_blank" rel="noopener noreferrer">GitHub</a>
         <a href="#">LinkedIn</a>
       </div>
 
@@ -281,10 +266,8 @@
       <p class="copyright">
         © 2026 Keegan Labrot. All Rights Reserved.
       </p>
-
     </div>
-
   </footer>
-
+    <div class="bottom-page-gradient" aria-hidden="true"></div>
 </body>
 </html>
