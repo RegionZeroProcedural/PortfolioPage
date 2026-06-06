@@ -6,6 +6,7 @@
    - Centered mobile nav
    - Clean glass UI system
    - Footer bottom glow
+   - Updated smooth direct tilt support
 ========================================================= */
 
 /* =========================
@@ -247,6 +248,85 @@ section {
   opacity: 0.14;
   pointer-events: none;
   mix-blend-mode: screen;
+}
+
+/* =========================
+   04.5 SUBTLE DIRECT TILT SYSTEM
+   Use with JS on .skill-card and .project-card
+========================= */
+
+.skill-card,
+.project-card {
+  transform-style: preserve-3d;
+  will-change: transform;
+
+  transition:
+    transform 0.05s linear,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.skill-card:hover,
+.project-card:hover {
+  transition:
+    transform 0.05s linear,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
+}
+
+/* Keeps text/content above the subtle tilt glow. */
+.skill-card > *,
+.project-card > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Subtle mouse-follow reflection. Not text-eating. */
+.skill-card::before,
+.project-card::before {
+  background:
+    radial-gradient(
+      circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      rgba(142, 197, 255, 0.075),
+      rgba(0, 183, 255, 0.03) 24%,
+      transparent 58%
+    ),
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.07),
+      transparent 34%,
+      transparent 76%,
+      rgba(255, 255, 255, 0.025)
+    );
+
+  opacity: 0;
+  mix-blend-mode: screen;
+  transition: opacity 0.18s ease;
+}
+
+.skill-card:hover::before,
+.project-card:hover::before {
+  opacity: 1;
+}
+
+/* Subtle opposite-edge sheen. */
+.skill-card::after,
+.project-card::after {
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.035),
+    inset 0 9px 16px rgba(255, 255, 255, 0.035),
+    inset 0 -16px 24px rgba(0, 0, 0, 0.12),
+    0 0 18px rgba(0, 183, 255, 0.035);
+
+  background:
+    radial-gradient(
+      circle at var(--opposite-x, 50%) var(--opposite-y, 50%),
+      rgba(255, 255, 255, 0.11),
+      rgba(0, 183, 255, 0.08) 16%,
+      transparent 44%
+    );
+
+  opacity: 0.75;
 }
 
 /* =========================
@@ -684,12 +764,6 @@ section {
   font-size: 1.35rem;
   font-weight: 850;
   text-align: center;
-
-  transform-style: preserve-3d;
-
-  transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease;
 }
 
 .skill-card span {
@@ -707,6 +781,7 @@ section {
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   align-items: stretch;
   gap: 40px;
+  perspective: 1200px;
 }
 
 .project-card {
@@ -717,15 +792,9 @@ section {
   flex-direction: column;
 
   border-radius: 42px;
-
-  transition:
-    transform var(--transition-med),
-    box-shadow var(--transition-med);
 }
 
 .project-card:hover {
-  transform: translateY(-8px) scale(1.012);
-
   box-shadow:
     0 28px 76px rgba(0, 0, 0, 0.32),
     0 0 24px rgba(56, 189, 248, 0.08),
@@ -787,6 +856,78 @@ section {
   transition:
     transform var(--transition-fast),
     box-shadow var(--transition-fast);
+}
+
+/* Project image frame */
+.project-media,
+.project-card figure {
+  position: relative;
+  overflow: hidden;
+  border-radius: 30px;
+}
+
+.project-media img,
+.project-card figure img,
+.projects-grid img {
+  width: 100%;
+  height: 100%;
+  display: block;
+
+  object-fit: cover;
+  object-position: center;
+
+  border-radius: inherit;
+  border: 1px solid #8ec5ff;
+  margin: 4% auto;
+}
+
+/* =========================
+   OPPOSITE-SIDE CARD SHINE
+========================= */
+
+.skill-card,
+.project-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-shine {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      circle 190px at var(--shine-x, 50%) var(--shine-y, 50%),
+      rgba(255, 255, 255, 0.17),
+      rgba(191, 228, 255, 0.09) 20%,
+      rgba(142, 197, 255, 0.035) 42%,
+      transparent 70%
+    ),
+    linear-gradient(
+      135deg,
+      transparent 32%,
+      rgba(255, 255, 255, 0.035) 45%,
+      rgba(191, 228, 255, 0.075) 50%,
+      rgba(255, 255, 255, 0.025) 56%,
+      transparent 68%
+    );
+
+  opacity: 0;
+  mix-blend-mode: screen;
+  transition: opacity 0.18s ease;
+}
+
+.skill-card:hover .card-shine,
+.project-card:hover .card-shine {
+  opacity: 1;
+}
+
+.skill-card > *:not(.card-shine),
+.project-card > *:not(.card-shine) {
+  position: relative;
+  z-index: 2;
 }
 
 /* =========================
@@ -1053,11 +1194,6 @@ section {
   letter-spacing: 0.5px;
 }
 
-.projects-grid img {
-  margin: 3%;
-  border: 1px solid #8ec5ff;
-}
-
 /* =========================
    13. RESPONSIVE
 ========================= */
@@ -1135,6 +1271,11 @@ section {
   .hero {
     min-height: 100vh;
     padding: 150px 6% 70px;
+
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 34px;
   }
 
   .hero h1 {
@@ -1148,6 +1289,16 @@ section {
 
   .hero-buttons {
     flex-direction: column;
+  }
+
+  .hero-profile {
+    width: clamp(150px, 48vw, 240px);
+    align-self: center;
+  }
+
+  .hero-content {
+    width: 100%;
+    max-width: 100%;
   }
 
   .section {
@@ -1194,25 +1345,6 @@ section {
   .footer-links a,
   .footer-socials a {
     width: 100%;
-  }
-  .hero {
-    min-height: 100vh;
-    padding: 150px 6% 70px;
-
-    flex-direction: column-reverse;
-    align-items: flex-start;
-    justify-content: center;
-    gap: 34px;
-  }
-
-  .hero-profile {
-    width: clamp(150px, 48vw, 240px);
-    align-self: center;
-  }
-
-  .hero-content {
-    width: 100%;
-    max-width: 100%;
   }
 }
 

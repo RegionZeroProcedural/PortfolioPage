@@ -73,54 +73,69 @@ glassElements.forEach((el) => {
   });
 });
 
-/* Skill card tilt */
-const skillCards = document.querySelectorAll(".skill-card");
+/* Skill card + project card tilt with opposite-side shine */
+const tiltCards = document.querySelectorAll(".skill-card, .project-card");
 
-skillCards.forEach((card) => {
+tiltCards.forEach((card) => {
+  const maxTilt = Number(card.dataset.maxTilt || 8);
+  const lift = Number(card.dataset.lift || 4);
+  const shine = card.querySelector(".card-shine");
+
   card.addEventListener("mousemove", (e) => {
-    const currentCard = e.currentTarget;
-    const rect = currentCard.getBoundingClientRect();
+    const rect = card.getBoundingClientRect();
 
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
 
-    const percentX = mouseX / rect.width;
-    const percentY = mouseY / rect.height;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
 
-    const centeredX = percentX - 0.5;
-    const centeredY = percentY - 0.5;
+    const rotateY = ((x - centerX) / centerX) * maxTilt;
+    const rotateX = ((centerY - y) / centerY) * maxTilt;
 
-    const rotateY = centeredX * 16;
-    const rotateX = centeredY * -16;
+    const mouseXPercent = (x / rect.width) * 100;
+    const mouseYPercent = (y / rect.height) * 100;
 
-    currentCard.style.transform = `
+    const oppositeX = rect.width - x;
+    const oppositeY = rect.height - y;
+
+    card.style.transform = `
       perspective(1000px)
+      translateY(-${lift}px)
       rotateX(${rotateX}deg)
       rotateY(${rotateY}deg)
-      scale(1.04)
     `;
+
+    /* These control the soft reflection on the card pseudo-elements. */
+    card.style.setProperty("--mouse-x", `${mouseXPercent}%`);
+    card.style.setProperty("--mouse-y", `${mouseYPercent}%`);
+    card.style.setProperty("--opposite-x", `${100 - mouseXPercent}%`);
+    card.style.setProperty("--opposite-y", `${100 - mouseYPercent}%`);
+
+    /* These control the real shine span. It goes opposite the cursor. */
+    if (shine) {
+      shine.style.setProperty("--shine-x", `${oppositeX}px`);
+      shine.style.setProperty("--shine-y", `${oppositeY}px`);
+    }
   });
 
-  card.addEventListener("mouseleave", (e) => {
-    e.currentTarget.style.transform =
-      "perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)";
+  card.addEventListener("mouseleave", () => {
+    card.style.transform = `
+      perspective(1000px)
+      translateY(0)
+      rotateX(0deg)
+      rotateY(0deg)
+    `;
+
+    card.style.setProperty("--mouse-x", "50%");
+    card.style.setProperty("--mouse-y", "50%");
+    card.style.setProperty("--opposite-x", "50%");
+    card.style.setProperty("--opposite-y", "50%");
+
+    if (shine) {
+      shine.style.setProperty("--shine-x", "50%");
+      shine.style.setProperty("--shine-y", "50%");
+    }
   });
 });
 
-/* Scroll-reactive ambient background */
-const ambientBg = document.querySelector(".ambient-bg");
-
-function updateScrollBackground() {
-  if (!ambientBg) return;
-
-  const scrollY = window.scrollY;
-  const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-  const progress = maxScroll > 0 ? scrollY / maxScroll : 0;
-
-  ambientBg.style.setProperty("--scroll-x", `${scrollY * -0.035}px`);
-  ambientBg.style.setProperty("--scroll-y", `${scrollY * 0.055}px`);
-  ambientBg.style.setProperty("--scroll-scale", `${1 + progress * 0.06}`);
-}
-
-window.addEventListener("scroll", updateScrollBackground, { passive: true });
-updateScrollBackground();
