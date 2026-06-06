@@ -30,6 +30,29 @@ if (menuToggle && mobileNav) {
   });
 }
 
+const bgVideo = document.querySelector("#bgVideo");
+
+if (bgVideo) {
+  const highQualitySrc = "video/background-hq.mp4";
+
+  const preloadVideo = document.createElement("video");
+  preloadVideo.src = highQualitySrc;
+  preloadVideo.muted = true;
+  preloadVideo.loop = true;
+  preloadVideo.playsInline = true;
+  preloadVideo.preload = "auto";
+
+  preloadVideo.addEventListener("canplaythrough", () => {
+    const currentTime = bgVideo.currentTime;
+
+    bgVideo.src = highQualitySrc;
+    bgVideo.currentTime = currentTime;
+    bgVideo.play().catch(() => {});
+  });
+
+  preloadVideo.load();
+}
+
 /* Glass mouse highlight */
 const glassElements = document.querySelectorAll(".liquid-glass, .liquid-button");
 
