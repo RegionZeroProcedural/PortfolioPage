@@ -1053,6 +1053,11 @@ section {
   letter-spacing: 0.5px;
 }
 
+.projects-grid img {
+  margin: 3%;
+  border: 1px solid #8ec5ff;
+}
+
 /* =========================
    13. RESPONSIVE
 ========================= */
