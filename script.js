@@ -4,6 +4,12 @@ const mobileNav = document.querySelector(".mobile-nav");
 if (menuToggle && mobileNav) {
   menuToggle.setAttribute("aria-expanded", "false");
 
+  const closeMobileNav = () => {
+    mobileNav.classList.remove("active");
+    menuToggle.textContent = "☰";
+    menuToggle.setAttribute("aria-expanded", "false");
+  };
+
   menuToggle.addEventListener("click", () => {
     mobileNav.classList.toggle("active");
 
@@ -14,14 +20,17 @@ if (menuToggle && mobileNav) {
   });
 
   mobileNav.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => {
-      mobileNav.classList.remove("active");
-      menuToggle.textContent = "☰";
-      menuToggle.setAttribute("aria-expanded", "false");
-    });
+    link.addEventListener("click", closeMobileNav);
+  });
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 768) {
+      closeMobileNav();
+    }
   });
 }
 
+/* Glass mouse highlight */
 const glassElements = document.querySelectorAll(".liquid-glass, .liquid-button");
 
 glassElements.forEach((el) => {
@@ -41,6 +50,7 @@ glassElements.forEach((el) => {
   });
 });
 
+/* Skill card tilt */
 const skillCards = document.querySelectorAll(".skill-card");
 
 skillCards.forEach((card) => {
@@ -74,23 +84,14 @@ skillCards.forEach((card) => {
   });
 });
 
-/* Always-animated + scroll-reactive background */
-const root = document.body;
-
-let scrollY = window.scrollY;
-let targetScrollY = window.scrollY;
-let time = 0;
-
-/* Scroll-reactive background only */
+/* Scroll-reactive ambient background */
 const ambientBg = document.querySelector(".ambient-bg");
 
 function updateScrollBackground() {
   if (!ambientBg) return;
 
   const scrollY = window.scrollY;
-  const maxScroll =
-    document.documentElement.scrollHeight - window.innerHeight;
-
+  const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
   const progress = maxScroll > 0 ? scrollY / maxScroll : 0;
 
   ambientBg.style.setProperty("--scroll-x", `${scrollY * -0.035}px`);
