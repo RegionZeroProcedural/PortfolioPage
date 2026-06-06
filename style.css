@@ -372,6 +372,63 @@ section {
   cursor: pointer;
 }
 
+.hero {
+  min-height: 100vh;
+  padding: 190px var(--content-pad) 90px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(2rem, 6vw, 6rem);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 760px;
+  flex: 1 1 620px;
+}
+
+.hero-profile {
+  position: relative;
+  z-index: 2;
+
+  width: clamp(220px, 24vw, 380px);
+  aspect-ratio: 1 / 1;
+
+  flex: 0 0 auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+  padding: clamp(8px, 1vw, 14px);
+
+  box-shadow:
+    0 0 42px rgba(142, 197, 255, 0.18),
+    0 28px 80px rgba(0, 0, 0, 0.42),
+    inset 0 1px 1px rgba(255, 255, 255, 0.48),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.22);
+}
+
+.hero-profile img {
+  width: 100%;
+  height: 100%;
+  display: block;
+
+  object-fit: cover;
+  object-position: center;
+
+  border-radius: 50%;
+
+  border: 1px solid rgba(255, 255, 255, 0.38);
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.18),
+    0 0 24px rgba(0, 0, 0, 0.28);
+}
+
 /* Mobile menu is fixed and centered below the fixed header. */
 .mobile-nav {
   position: fixed;
@@ -1132,6 +1189,25 @@ section {
   .footer-links a,
   .footer-socials a {
     width: 100%;
+  }
+  .hero {
+    min-height: 100vh;
+    padding: 150px 6% 70px;
+
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 34px;
+  }
+
+  .hero-profile {
+    width: clamp(150px, 48vw, 240px);
+    align-self: center;
+  }
+
+  .hero-content {
+    width: 100%;
+    max-width: 100%;
   }
 }
 
