@@ -2417,6 +2417,10 @@ body.light-theme .modal__close {
     overflow-y: auto;
   }
 
+  .scroll__btn {
+    transform: translateY(25px);
+  }
+
   .modal {
     width: min(94vw, 560px);
     max-height: none;
@@ -2825,4 +2829,44 @@ body.motion-tilt-active .project-card::before {
 body.motion-tilt-active .skill-card .card-shine,
 body.motion-tilt-active .project-card .card-shine {
   opacity: 1;
+}
+
+/* =========================
+   MOBILE MOTION TILT STABILITY FIX
+========================= */
+
+.motion-tilt-active .skill-card,
+.motion-tilt-active .project-card {
+  transform-style: flat !important;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  perspective: none;
+}
+
+.motion-tilt-active .skill-card *,
+.motion-tilt-active .project-card * {
+  backface-visibility: visible;
+  -webkit-backface-visibility: visible;
+}
+
+.motion-tilt-active .skill-card > *:not(.card-shine),
+.motion-tilt-active .project-card > *:not(.card-shine) {
+  position: relative;
+  z-index: 5;
+  transform: none !important;
+}
+
+.motion-tilt-active .card-shine {
+  z-index: 1;
+  opacity: 1;
+}
+
+.motion-tilt-active .skill-card::before,
+.motion-tilt-active .project-card::before {
+  opacity: 1;
+}
+
+.motion-tilt-active .skill-card::after,
+.motion-tilt-active .project-card::after {
+  z-index: 0;
 }

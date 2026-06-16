@@ -314,7 +314,7 @@ if (tiltCards.length && motionTiltToggle) {
   let currentRotateY = 0;
   let animationFrame = null;
 
-  const maxMobileTilt = 8;
+  const maxMobileTilt = 5;
 
   const clamp = (value, min, max) => {
     return Math.min(Math.max(value, min), max);
@@ -329,10 +329,10 @@ if (tiltCards.length && motionTiltToggle) {
       const shine = card.querySelector(".card-shine");
 
       card.style.transform = `
-        perspective(1000px)
-        translateY(0)
-        rotateX(0deg)
-        rotateY(0deg)
+        perspective(900px)
+        translate3d(0, -${lift}px, 0)
+        rotateX(${currentRotateX}deg)
+        rotateY(${currentRotateY}deg)
       `;
 
       card.style.setProperty("--mouse-x", "50%");
