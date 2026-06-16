@@ -2498,6 +2498,10 @@ body.light-theme .modal__close {
     --header-width: min(92vw, 520px);
   }
 
+  .scroll__btn {
+    transform: translateY(25px);
+  }
+
   .site-video-bg {
     object-position: 60% center;
   }
@@ -2654,6 +2658,10 @@ body.light-theme .modal__close {
 @media (max-width: 480px) {
   .modal-overlay {
     padding: 10px;
+  }
+
+  .scroll__btn {
+    transform: translateY(25px);
   }
 
   .modal {
