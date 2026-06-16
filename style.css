@@ -2771,3 +2771,28 @@ body.light-theme .modal__close {
   opacity: 1;
   transform: translateX(0);
 }
+
+/* =========================
+   MODAL STACKING FIX
+========================= */
+
+#contactModal.modal-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 999999999 !important;
+}
+
+body.modal-open .site-footer {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  z-index: -1 !important;
+}
+
+body.modal-open .mail__btn,
+body.modal-open .scroll__btn,
+body.modal-open .mobile-nav {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
