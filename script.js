@@ -315,7 +315,7 @@ if (tiltCards.length && motionTiltToggle) {
   let animationFrame = null;
   let lastSensorUpdate = 0;
 
-  const maxMobileTilt = 4;
+  const maxMobileTilt = 3;
   const visibleTiltCards = new Set();
 
   const clamp = (value, min, max) => {
