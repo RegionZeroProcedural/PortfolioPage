@@ -2709,3 +2709,65 @@ body.light-theme .modal__close {
     transition: none !important;
   }
 }
+
+/* =========================
+   RESTORE MODAL PANEL SLIDE-IN ANIMATION
+========================= */
+
+/* Do not hide modal with display: none or the animation cannot run */
+.modal-overlay {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  transition:
+    opacity 0.35s ease,
+    visibility 0.35s ease;
+}
+
+.modal-overlay.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.modal {
+  transform: scale(0.96);
+  transition: transform 0.45s ease;
+  overflow: hidden;
+}
+
+.modal-overlay.open .modal {
+  transform: scale(1);
+}
+
+/* Starting positions before modal opens */
+.modal__about {
+  opacity: 0;
+  transform: translateX(-100vw);
+}
+
+.modal__contact {
+  opacity: 0;
+  transform: translateX(100vw);
+}
+
+/* Animation settings */
+.modal__about,
+.modal__contact {
+  transition:
+    opacity 0.5s ease,
+    transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Slight delay for the right side */
+.modal__contact {
+  transition-delay: 0.08s;
+}
+
+/* Final positions when open */
+.modal-overlay.open .modal__about,
+.modal-overlay.open .modal__contact {
+  opacity: 1;
+  transform: translateX(0);
+}
