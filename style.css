@@ -2801,8 +2801,28 @@ body.modal-open .mobile-nav {
   display: none;
 }
 
-@media (pointer: coarse) and (max-width: 768px) {
+/* Show the card-tilt permission button on phones/tablets.
+   Do not limit this to 768px because some mobile viewports can report wider. */
+@media (hover: none), (pointer: coarse) {
   .motion-tilt-btn {
     display: inline-flex;
   }
+}
+
+/* Keep the motion feature off desktop/laptop mouse devices. */
+@media (hover: hover) and (pointer: fine) {
+  .motion-tilt-btn {
+    display: none !important;
+  }
+}
+
+/* When gyro tilt is enabled, show the same shine layer that desktop hover uses. */
+body.motion-tilt-active .skill-card::before,
+body.motion-tilt-active .project-card::before {
+  opacity: 1;
+}
+
+body.motion-tilt-active .skill-card .card-shine,
+body.motion-tilt-active .project-card .card-shine {
+  opacity: 1;
 }
