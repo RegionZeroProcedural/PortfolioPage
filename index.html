@@ -27,30 +27,20 @@
   </video>
 
     <div class="site-bg-overlay" aria-hidden="true"></div>
-
-
-    <div class="ambient-bg" aria-hidden="true">
-      <div class="ambient-orb orb-one"></div>
-      <div class="ambient-orb orb-two"></div>
-      <div class="ambient-orb orb-three"></div>
-      <div class="ambient-orb orb-four"></div>
-    </div>
-
+    
     <header class="site-header liquid-glass">
       <div class="left__Header--buttons">
         <div class="nav__link">
-          <a href="#home" class="logo liquid-button gpu-liquid">Keegan Labrot</a>
+          <a href="#home" class="logo liquid-button gpu-liquid">KL</a>
         </div>
 
-        <div class="nav__link fa-adjust">
-              <i class="
-              fa-solid
-              fa-circle-half-stroke
-              liquid-button
-              gpu-liquid
-              darkModeToggle
-              "></i>
-        </div>
+        <button id="darkModeToggle" class="theme-toggle liquid-button gpu-liquid" type="button" aria-label="Toggle dark mode" aria-pressed="true">
+          <span class="theme-toggle__track">
+            <span class="theme-toggle__thumb">
+              <i class="fa-solid fa-circle-half-stroke"></i>
+            </span>
+          </span>
+        </button>
       </div>
 
       <button class="menu-toggle" aria-label="Open navigation">
@@ -86,50 +76,56 @@
         </ul>
       </nav>
     </header>
+    <button class="mail__btn">
+      <i class="fa-solid fa-envelope"></i>
+    </button>
 
+    
     <nav class="mobile-nav liquid-glass">
       <a href="#about" class="liquid-button gpu-liquid">About</a>
       <a href="#skills" class="liquid-button gpu-liquid">Skills</a>
       <a href="#projects" class="liquid-button gpu-liquid">Projects</a>
       <a href="#contact" class="liquid-button gpu-liquid">Contact</a>
     </nav>
-
     <main>
       <section id="home" class="hero">
-    <div class="hero-content">
-      <p class="eyebrow">Frontend Developer</p>
-
-      <h1>
-        I build responsive,<br />
-        user-focused websites.
-      </h1>
-
-      <p class="hero-text">
-        I create clean, modern web experiences using HTML, CSS,
-        and JavaScript, with a focus on responsive layouts,
-        interactive UI, and real-world usability.
-      </p>
-
-      <div class="hero-buttons">
-        <a href="#projects" class="btn primary-btn liquid-button gpu-liquid">
-          View Projects
-        </a>
-
-        <a href="#contact" class="btn secondary-btn liquid-button gpu-liquid">
-          Contact Me
-        </a>
-      </div>
-    </div>
-
-    <div class="hero-profile liquid-glass gpu-liquid">
-      <img src="images/profile.jpg" alt="Portrait of Keegan Labrot" />
-    </div>
-  </section>
-
+        <div class="hero-content">
+          <p class="eyebrow">Keegan LaBrot</p>
+          
+          <h1>
+            I build responsive,<br />
+            user-focused websites.
+          </h1>
+          
+          <p class="hero-text">
+            I create clean, modern web experiences using HTML, CSS,
+            and JavaScript, with a focus on responsive layouts,
+            interactive UI, and real-world usability.
+          </p>
+          
+          <div class="hero-buttons">
+            <a href="#projects" class="btn primary-btn liquid-button gpu-liquid">
+              View Projects
+            </a>
+            
+            <a href="#contact" class="btn secondary-btn liquid-button gpu-liquid">
+              Contact Me
+            </a>
+          </div>
+        </div>
+        
+        <div class="hero-profile liquid-glass gpu-liquid">
+          <img src="images/profile.jpg" alt="Portrait of Keegan Labrot" />
+        </div>
+        <div class="scroll__btn">
+          <div class="scroll__btn--logo"></div>
+        </div>
+      </section>
+      
       <section id="about" class="section">
         <div class="about-card liquid-glass gpu-liquid">
           <h2>About Me</h2>
-
+          
           <p>
             I am a frontend developer focused on building polished,
             accessible, and responsive websites. My background in
@@ -206,7 +202,7 @@
               <span>Responsive Design</span>
             </div>
 
-            <a href="#" class="project-link">
+            <a target="_blank" href="https://regionzeroprocedural.github.io/Region-Zero-Website/index.html" class="project-link">
               View Project
             </a>
           </article>

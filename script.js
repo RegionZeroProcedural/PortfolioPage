@@ -30,6 +30,7 @@ if (menuToggle && mobileNav) {
   });
 }
 
+/* Background video quality swap */
 const bgVideo = document.querySelector("#bgVideo");
 
 if (bgVideo) {
@@ -106,13 +107,11 @@ tiltCards.forEach((card) => {
       rotateY(${rotateY}deg)
     `;
 
-    /* These control the soft reflection on the card pseudo-elements. */
     card.style.setProperty("--mouse-x", `${mouseXPercent}%`);
     card.style.setProperty("--mouse-y", `${mouseYPercent}%`);
     card.style.setProperty("--opposite-x", `${100 - mouseXPercent}%`);
     card.style.setProperty("--opposite-y", `${100 - mouseYPercent}%`);
 
-    /* These control the real shine span. It goes opposite the cursor. */
     if (shine) {
       shine.style.setProperty("--shine-x", `${oppositeX}px`);
       shine.style.setProperty("--shine-y", `${oppositeY}px`);
@@ -139,3 +138,41 @@ tiltCards.forEach((card) => {
   });
 });
 
+/* Liquid glass Android-style dark mode toggle */
+const darkToggleBtn = document.querySelector("#darkModeToggle");
+
+const savedTheme = localStorage.getItem("theme");
+
+if (savedTheme === "light") {
+  document.body.classList.add("light-theme");
+} else {
+  document.body.classList.remove("light-theme");
+}
+
+function updateThemeToggle() {
+  if (!darkToggleBtn) return;
+
+  const isLight = document.body.classList.contains("light-theme");
+
+  darkToggleBtn.classList.toggle("active", isLight);
+  darkToggleBtn.setAttribute("aria-pressed", String(isLight));
+  darkToggleBtn.setAttribute(
+    "aria-label",
+    isLight ? "Switch to dark mode" : "Switch to light mode"
+  );
+}
+
+function toggleDark() {
+  document.body.classList.toggle("light-theme");
+
+  const isLight = document.body.classList.contains("light-theme");
+
+  localStorage.setItem("theme", isLight ? "light" : "dark");
+
+  updateThemeToggle();
+}
+
+if (darkToggleBtn) {
+  updateThemeToggle();
+  darkToggleBtn.addEventListener("click", toggleDark);
+}
