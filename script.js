@@ -231,35 +231,62 @@ window.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-const mailBtn = document.querySelector(".mail__btn");
-const modalOverlay = document.querySelector("#contactModal");
-const modalClose = document.querySelector(".modal__close");
+/* Contact modal triggers */
+const contactModal = document.querySelector("#contactModal");
+const contactModalClose = document.querySelector(".modal__close");
 
-const openModal = () => {
-  modalOverlay.classList.add("open");
-  modalOverlay.setAttribute("aria-hidden", "false");
+const contactModalTriggers = document.querySelectorAll(
+  '.mail__btn, a[href="#contact"]'
+);
+
+const openContactModal = () => {
+  if (!contactModal) return;
+
+  contactModal.classList.add("open");
+  contactModal.setAttribute("aria-hidden", "false");
   document.body.classList.add("modal-open");
 };
 
-const closeModal = () => {
-  modalOverlay.classList.remove("open");
-  modalOverlay.setAttribute("aria-hidden", "true");
+const closeContactModal = () => {
+  if (!contactModal) return;
+
+  contactModal.classList.remove("open");
+  contactModal.setAttribute("aria-hidden", "true");
   document.body.classList.remove("modal-open");
 };
 
-if (mailBtn && modalOverlay && modalClose) {
-  mailBtn.addEventListener("click", openModal);
-  modalClose.addEventListener("click", closeModal);
+contactModalTriggers.forEach((trigger) => {
+  trigger.addEventListener("click", (event) => {
+    event.preventDefault();
 
-  modalOverlay.addEventListener("click", (event) => {
-    if (event.target === modalOverlay) {
-      closeModal();
+    if (mobileNav && menuToggle) {
+      mobileNav.classList.remove("active");
+      menuToggle.textContent = "☰";
+      menuToggle.setAttribute("aria-expanded", "false");
     }
-  });
 
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && modalOverlay.classList.contains("open")) {
-      closeModal();
+    openContactModal();
+  });
+});
+
+if (contactModalClose) {
+  contactModalClose.addEventListener("click", closeContactModal);
+}
+
+if (contactModal) {
+  contactModal.addEventListener("click", (event) => {
+    if (event.target === contactModal) {
+      closeContactModal();
     }
   });
 }
+
+document.addEventListener("keydown", (event) => {
+  if (
+    event.key === "Escape" &&
+    contactModal &&
+    contactModal.classList.contains("open")
+  ) {
+    closeContactModal();
+  }
+});

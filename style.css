@@ -2817,3 +2817,117 @@ body.light-theme .modal__close {
   }
 }
 
+/* Keep modal above every page layer */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483647;
+}
+
+.modal {
+  position: relative;
+  z-index: 1;
+}
+
+/* Hide page UI while modal is open */
+body.modal-open .site-header,
+body.modal-open .site-footer,
+body.modal-open .mail__btn,
+body.modal-open .scroll__btn,
+body.modal-open .mobile-nav {
+  opacity: 0;
+  pointer-events: none;
+  filter: blur(8px);
+}
+
+.mail__btn {
+  transition: all 0.2s ease;
+}
+
+.mail__btn:hover {
+  transform: translateY(-7px) scale(1.08);
+
+  border-color: rgba(191, 228, 255, 0.76);
+
+  box-shadow:
+    0 24px 54px rgba(0, 0, 0, 0.42),
+    0 0 28px rgba(142, 197, 255, 0.32),
+    inset 0 1px 1px rgba(255, 255, 255, 0.58),
+    inset 0 -1px 1px rgba(0, 0, 0, 0.18);
+}
+
+.mail__btn:hover::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.mail__btn:hover::after {
+  opacity: 1;
+  transform: translateX(120%);
+}
+
+.mail__btn:hover i {
+  color: var(--blue-bright);
+  transform: rotate(-8deg) scale(1.08);
+  filter: drop-shadow(0 0 8px rgba(191, 228, 255, 0.45));
+}
+
+.mail__btn:active {
+  transform: translateY(-2px) scale(0.94);
+}
+
+/* =========================
+   LIGHT MODE MAIL BUTTON HOVER
+========================= */
+
+body.light-theme .mail__btn:hover {
+  transform: translateY(-7px) scale(1.08);
+
+  border-color: rgba(14, 165, 233, 0.48);
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.92),
+      rgba(191, 228, 255, 0.58) 48%,
+      rgba(142, 197, 255, 0.34)
+    );
+
+  box-shadow:
+    0 24px 54px rgba(30, 64, 175, 0.22),
+    0 0 30px rgba(20, 149, 255, 0.26),
+    inset 0 1px 1px rgba(255, 255, 255, 0.95),
+    inset 0 -1px 1px rgba(15, 23, 42, 0.08);
+}
+
+body.light-theme .mail__btn:hover::before {
+  opacity: 1;
+  transform: scale(1);
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(20, 149, 255, 0.26),
+      rgba(142, 197, 255, 0.16) 34%,
+      transparent 64%
+    );
+}
+
+body.light-theme .mail__btn:hover::after {
+  opacity: 1;
+  transform: translateX(120%);
+
+  background:
+    linear-gradient(
+      120deg,
+      transparent 20%,
+      rgba(255, 255, 255, 0.72) 45%,
+      transparent 70%
+    );
+}
+
+body.light-theme .mail__btn:hover i {
+  color: #075985;
+  transform: rotate(-8deg) scale(1.08);
+  filter: drop-shadow(0 0 8px rgba(14, 165, 233, 0.38));
+}
