@@ -1406,6 +1406,55 @@ section {
     padding: 70px 6%;
   }
 
+  /* =========================
+   SCROLL FADE-IN SECTIONS
+========================= */
+
+.js-enabled .scroll-fade {
+  opacity: 0;
+  transform: translateY(45px);
+  filter: blur(6px);
+
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease,
+    filter 0.8s ease;
+}
+
+.js-enabled .scroll-fade.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+/* Optional stagger for content inside sections */
+.js-enabled .scroll-fade > * {
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
+}
+
+.js-enabled .scroll-fade:not(.is-visible) > * {
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+.js-enabled .scroll-fade.is-visible > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .js-enabled .scroll-fade,
+  .js-enabled .scroll-fade > * {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+  }
+}
+
   .section h2 {
     font-size: clamp(2.2rem, 10vw, 3rem);
   }
@@ -1967,4 +2016,34 @@ body.light-theme .scroll__btn {
 .desktop-nav a.liquid-button:hover,
 .mobile-nav a.liquid-button:hover {
   transform: translateY(-2px);
+}
+
+/* =========================
+   SCROLL REVEAL
+========================= */
+
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(45px);
+  filter: blur(6px);
+
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease,
+    filter 0.8s ease;
+}
+
+.reveal-on-scroll.revealed {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-on-scroll {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+  }
 }

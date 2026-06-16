@@ -176,3 +176,57 @@ if (darkToggleBtn) {
   updateThemeToggle();
   darkToggleBtn.addEventListener("click", toggleDark);
 }
+
+document.body.classList.add("js-enabled");
+
+const fadeElements = document.querySelectorAll(".section, .site-footer");
+
+const fadeObserver = new IntersectionObserver(
+  (entries, observer) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  },
+  {
+    threshold: 0.15,
+    rootMargin: "0px 0px -80px 0px",
+  }
+);
+
+fadeElements.forEach((element) => {
+  element.classList.add("scroll-fade");
+  fadeObserver.observe(element);
+});
+
+window.addEventListener("DOMContentLoaded", () => {
+  const revealElements = document.querySelectorAll(
+    "main > section, .site-footer"
+  );
+
+  console.log("Reveal elements found:", revealElements.length);
+
+  revealElements.forEach((element) => {
+    element.classList.add("reveal-on-scroll");
+  });
+
+  const revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("revealed");
+        }
+      });
+    },
+    {
+      threshold: 0.12,
+      rootMargin: "0px 0px -80px 0px",
+    }
+  );
+
+  revealElements.forEach((element) => {
+    revealObserver.observe(element);
+  });
+});
