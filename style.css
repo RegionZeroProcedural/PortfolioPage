@@ -2418,7 +2418,7 @@ body.light-theme .modal__close {
   }
 
   .scroll__btn {
-    transform: translateY(25px);
+    transform: translateY(10vh);
   }
 
   .modal {
@@ -2499,7 +2499,7 @@ body.light-theme .modal__close {
   }
 
   .scroll__btn {
-    transform: translateY(25px);
+    transform: translateY(10vh);
   }
 
   .site-video-bg {
@@ -2661,7 +2661,7 @@ body.light-theme .modal__close {
   }
 
   .scroll__btn {
-    transform: translateY(25px);
+    transform: translateY(10vh);
   }
 
   .modal {
