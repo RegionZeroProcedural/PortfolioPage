@@ -290,3 +290,164 @@ document.addEventListener("keydown", (event) => {
     closeContactModal();
   }
 });
+
+/* Mobile accelerometer / gyro tilt */
+const motionTiltCards = document.querySelectorAll(".skill-card, .project-card");
+const motionTiltToggle = document.querySelector("#motionTiltToggle");
+
+if (motionTiltCards.length && motionTiltToggle) {
+  const supportsMotionTilt = "DeviceOrientationEvent" in window;
+  const prefersReducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)"
+  ).matches;
+
+  let motionTiltActive = false;
+  let baseBeta = null;
+  let baseGamma = null;
+
+  let targetRotateX = 0;
+  let targetRotateY = 0;
+  let currentRotateX = 0;
+  let currentRotateY = 0;
+  let animationFrame = null;
+
+  const maxMobileTilt = 8;
+
+  const clamp = (value, min, max) => {
+    return Math.min(Math.max(value, min), max);
+  };
+
+  const resetMotionCards = () => {
+    motionTiltCards.forEach((card) => {
+      card.style.transform =
+        "perspective(1000px) translateY(0) rotateX(0deg) rotateY(0deg)";
+      card.style.setProperty("--mouse-x", "50%");
+      card.style.setProperty("--mouse-y", "50%");
+      card.style.setProperty("--opposite-x", "50%");
+      card.style.setProperty("--opposite-y", "50%");
+    });
+  };
+
+  const animateMotionTilt = () => {
+    currentRotateX += (targetRotateX - currentRotateX) * 0.12;
+    currentRotateY += (targetRotateY - currentRotateY) * 0.12;
+
+    motionTiltCards.forEach((card) => {
+      const lift = Number(card.dataset.lift || 4);
+
+      const xPercent = clamp(
+        50 + (currentRotateY / maxMobileTilt) * 35,
+        8,
+        92
+      );
+
+      const yPercent = clamp(
+        50 - (currentRotateX / maxMobileTilt) * 35,
+        8,
+        92
+      );
+
+      card.style.transform = `
+        perspective(1000px)
+        translateY(-${lift}px)
+        rotateX(${currentRotateX}deg)
+        rotateY(${currentRotateY}deg)
+      `;
+
+      card.style.setProperty("--mouse-x", `${xPercent}%`);
+      card.style.setProperty("--mouse-y", `${yPercent}%`);
+      card.style.setProperty("--opposite-x", `${100 - xPercent}%`);
+      card.style.setProperty("--opposite-y", `${100 - yPercent}%`);
+    });
+
+    animationFrame = requestAnimationFrame(animateMotionTilt);
+  };
+
+  const handleDeviceOrientation = (event) => {
+    if (typeof event.beta !== "number" || typeof event.gamma !== "number") {
+      return;
+    }
+
+    if (baseBeta === null || baseGamma === null) {
+      baseBeta = event.beta;
+      baseGamma = event.gamma;
+    }
+
+    const betaDelta = clamp(event.beta - baseBeta, -18, 18);
+    const gammaDelta = clamp(event.gamma - baseGamma, -18, 18);
+
+    targetRotateX = clamp(-betaDelta * 0.45, -maxMobileTilt, maxMobileTilt);
+    targetRotateY = clamp(gammaDelta * 0.45, -maxMobileTilt, maxMobileTilt);
+  };
+
+  const startMotionTilt = async () => {
+    if (!supportsMotionTilt || prefersReducedMotion) {
+      motionTiltToggle.textContent = "Motion Not Supported";
+      motionTiltToggle.disabled = true;
+      return;
+    }
+
+    try {
+      if (typeof DeviceOrientationEvent.requestPermission === "function") {
+        const permission = await DeviceOrientationEvent.requestPermission();
+
+        if (permission !== "granted") {
+          motionTiltToggle.textContent = "Motion Denied";
+          return;
+        }
+      }
+
+      baseBeta = null;
+      baseGamma = null;
+
+      window.addEventListener("deviceorientation", handleDeviceOrientation, true);
+
+      if (!animationFrame) {
+        animateMotionTilt();
+      }
+
+      motionTiltActive = true;
+      motionTiltToggle.textContent = "Motion Tilt On";
+      motionTiltToggle.setAttribute("aria-pressed", "true");
+    } catch (error) {
+      console.error("Motion tilt permission error:", error);
+      motionTiltToggle.textContent = "Motion Unavailable";
+    }
+  };
+
+  const stopMotionTilt = () => {
+    window.removeEventListener(
+      "deviceorientation",
+      handleDeviceOrientation,
+      true
+    );
+
+    cancelAnimationFrame(animationFrame);
+    animationFrame = null;
+
+    targetRotateX = 0;
+    targetRotateY = 0;
+    currentRotateX = 0;
+    currentRotateY = 0;
+    baseBeta = null;
+    baseGamma = null;
+
+    resetMotionCards();
+
+    motionTiltActive = false;
+    motionTiltToggle.textContent = "Enable Motion Tilt";
+    motionTiltToggle.setAttribute("aria-pressed", "false");
+  };
+
+  motionTiltToggle.addEventListener("click", () => {
+    if (motionTiltActive) {
+      stopMotionTilt();
+    } else {
+      startMotionTilt();
+    }
+  });
+
+  if (!supportsMotionTilt || prefersReducedMotion) {
+    motionTiltToggle.style.display = "none";
+  }
+}

@@ -2796,3 +2796,13 @@ body.modal-open .mobile-nav {
   visibility: hidden !important;
   pointer-events: none !important;
 }
+
+.motion-tilt-btn {
+  display: none;
+}
+
+@media (pointer: coarse) and (max-width: 768px) {
+  .motion-tilt-btn {
+    display: inline-flex;
+  }
+}
