@@ -230,3 +230,36 @@ window.addEventListener("DOMContentLoaded", () => {
     revealObserver.observe(element);
   });
 });
+
+const mailBtn = document.querySelector(".mail__btn");
+const modalOverlay = document.querySelector("#contactModal");
+const modalClose = document.querySelector(".modal__close");
+
+const openModal = () => {
+  modalOverlay.classList.add("open");
+  modalOverlay.setAttribute("aria-hidden", "false");
+  document.body.classList.add("modal-open");
+};
+
+const closeModal = () => {
+  modalOverlay.classList.remove("open");
+  modalOverlay.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("modal-open");
+};
+
+if (mailBtn && modalOverlay && modalClose) {
+  mailBtn.addEventListener("click", openModal);
+  modalClose.addEventListener("click", closeModal);
+
+  modalOverlay.addEventListener("click", (event) => {
+    if (event.target === modalOverlay) {
+      closeModal();
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && modalOverlay.classList.contains("open")) {
+      closeModal();
+    }
+  });
+}
