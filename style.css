@@ -904,6 +904,11 @@ main,
   perspective: 1200px;
 }
 
+.projects-grid img#special {
+  object-fit: cover;
+  object-position: 45% center;
+}
+
 .skills-grid {
   grid-template-columns: repeat(auto-fit, minmax(230px, 230px));
   gap: 36px;
