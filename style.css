@@ -1892,8 +1892,8 @@ body.modal-open .mobile-nav {
 .modal__language__card .fa-css3-alt { color: #38bdf8; }
 .modal__language__card .fa-js { color: #facc15; }
 .modal__language__card .fa-react { color: #67e8f9; }
-.modal__language__card .fa-python { color: #3776ab; }
-.modal__language__card .fa-unity { color: #e5edf5; }
+.modal__language__card .fa-python { color: #3f8fcf; }
+.modal__language__card .fa-unity { color: color: #e8eef5; }
 .modal__language__card .fa-terminal { color: #8ec5ff; }
 .modal__language__card .fa-java { color: #ff9f43; }
 
