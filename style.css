@@ -2878,3 +2878,60 @@ body.motion-tilt-active .project-card .card-shine {
 .motion-tilt-active .project-card::after {
   z-index: 0;
 }
+
+/* =========================
+   MOBILE MOTION TILT — REAL TILT SAFE MODE
+========================= */
+
+.motion-tilt-active .skill-card,
+.motion-tilt-active .project-card {
+  transform-style: flat !important;
+  backface-visibility: hidden !important;
+  -webkit-backface-visibility: hidden !important;
+
+  /* Important: reduce mobile compositing bugs */
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+
+  will-change: transform;
+  transition: none !important;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.16),
+      rgba(255, 255, 255, 0.06) 52%,
+      rgba(142, 197, 255, 0.08)
+    ) !important;
+}
+
+.motion-tilt-active .skill-card *,
+.motion-tilt-active .project-card * {
+  backface-visibility: visible !important;
+  -webkit-backface-visibility: visible !important;
+}
+
+.motion-tilt-active .skill-card > *:not(.card-shine),
+.motion-tilt-active .project-card > *:not(.card-shine) {
+  position: relative;
+  z-index: 5;
+  transform: none !important;
+}
+
+.motion-tilt-active .skill-card span {
+  transform: none !important;
+}
+
+.motion-tilt-active .skill-card::before,
+.motion-tilt-active .project-card::before {
+  opacity: 1;
+}
+
+.motion-tilt-active .skill-card::after,
+.motion-tilt-active .project-card::after {
+  opacity: 0.75;
+}
+
+.motion-tilt-active .card-shine {
+  opacity: 0.45;
+}

@@ -390,7 +390,7 @@ if (tiltCards.length && motionTiltToggle) {
 
       card.style.transform = `
         perspective(900px)
-        translate3d(0, -${lift}px, 0)
+        translate3d(0, -2px, 0)
         rotateX(${currentRotateX}deg)
         rotateY(${currentRotateY}deg)
       `;
@@ -424,8 +424,8 @@ if (tiltCards.length && motionTiltToggle) {
     const betaDelta = clamp(event.beta - baseBeta, -14, 14);
     const gammaDelta = clamp(event.gamma - baseGamma, -14, 14);
 
-    targetRotateX = clamp(-betaDelta * 0.28, -maxMobileTilt, maxMobileTilt);
-    targetRotateY = clamp(gammaDelta * 0.28, -maxMobileTilt, maxMobileTilt);
+    targetRotateX = clamp(-betaDelta * 0.2, -maxMobileTilt, maxMobileTilt);
+targetRotateY = clamp(gammaDelta * 0.2, -maxMobileTilt, maxMobileTilt);
   };
 
   const startMotionTilt = async () => {
