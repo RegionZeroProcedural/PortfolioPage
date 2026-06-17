@@ -295,7 +295,7 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-/* Mobile accelerometer / gyro tilt - optimized */
+/* Mobile gyro highlight only */
 const motionTiltToggle = document.querySelector("#motionTiltToggle");
 
 if (tiltCards.length && motionTiltToggle) {
@@ -304,19 +304,10 @@ if (tiltCards.length && motionTiltToggle) {
     "(prefers-reduced-motion: reduce)"
   ).matches;
 
-  let motionTiltActive = false;
+  let motionHighlightActive = false;
   let baseBeta = null;
   let baseGamma = null;
-
-  let targetRotateX = 0;
-  let targetRotateY = 0;
-  let currentRotateX = 0;
-  let currentRotateY = 0;
-  let animationFrame = null;
   let lastSensorUpdate = 0;
-
-  const maxMobileTilt = 3;
-  const visibleTiltCards = new Set();
 
   const clamp = (value, min, max) => {
     return Math.min(Math.max(value, min), max);
@@ -326,90 +317,26 @@ if (tiltCards.length && motionTiltToggle) {
     return window.matchMedia("(pointer: coarse)").matches;
   };
 
-  const visibleCardObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          visibleTiltCards.add(entry.target);
-        } else {
-          visibleTiltCards.delete(entry.target);
-
-          entry.target.style.transform = `
-            perspective(900px)
-            translate3d(0, 0, 0)
-            rotateX(0deg)
-            rotateY(0deg)
-          `;
-        }
-      });
-    },
-    {
-      threshold: 0.15,
-      rootMargin: "80px 0px 80px 0px",
-    }
-  );
-
-  tiltCards.forEach((card) => {
-    visibleCardObserver.observe(card);
-  });
-
-  const resetMotionCards = () => {
+  const resetGyroHighlight = () => {
     tiltCards.forEach((card) => {
-      card.style.transform = `
-        perspective(900px)
-        translate3d(0, 0, 0)
-        rotateX(0deg)
-        rotateY(0deg)
-      `;
-
       card.style.setProperty("--mouse-x", "50%");
       card.style.setProperty("--mouse-y", "50%");
       card.style.setProperty("--opposite-x", "50%");
       card.style.setProperty("--opposite-y", "50%");
+
+      const shine = card.querySelector(".card-shine");
+
+      if (shine) {
+        shine.style.setProperty("--shine-x", "50%");
+        shine.style.setProperty("--shine-y", "50%");
+      }
     });
-  };
-
-  const animateMotionTilt = () => {
-    currentRotateX += (targetRotateX - currentRotateX) * 0.08;
-    currentRotateY += (targetRotateY - currentRotateY) * 0.08;
-
-    const xPercent = clamp(
-      50 + (currentRotateY / maxMobileTilt) * 28,
-      12,
-      88
-    );
-
-    const yPercent = clamp(
-      50 - (currentRotateX / maxMobileTilt) * 28,
-      12,
-      88
-    );
-
-    visibleTiltCards.forEach((card) => {
-      const lift = Number(card.dataset.lift || 2);
-
-      card.style.transform = `
-        perspective(900px)
-        translate3d(0, -2px, 0)
-        rotateX(${currentRotateX}deg)
-        rotateY(${currentRotateY}deg)
-      `;
-
-      card.style.setProperty("--mouse-x", `${xPercent}%`);
-      card.style.setProperty("--mouse-y", `${yPercent}%`);
-      card.style.setProperty("--opposite-x", `${100 - xPercent}%`);
-      card.style.setProperty("--opposite-y", `${100 - yPercent}%`);
-    });
-
-    animationFrame = requestAnimationFrame(animateMotionTilt);
   };
 
   const handleDeviceOrientation = (event) => {
     const now = performance.now();
 
-    // Limits sensor processing to about 30fps instead of firing constantly.
     if (now - lastSensorUpdate < 33) return;
-
     lastSensorUpdate = now;
 
     if (typeof event.beta !== "number" || typeof event.gamma !== "number") {
@@ -421,14 +348,28 @@ if (tiltCards.length && motionTiltToggle) {
       baseGamma = event.gamma;
     }
 
-    const betaDelta = clamp(event.beta - baseBeta, -14, 14);
-    const gammaDelta = clamp(event.gamma - baseGamma, -14, 14);
+    const betaDelta = clamp(event.beta - baseBeta, -18, 18);
+    const gammaDelta = clamp(event.gamma - baseGamma, -18, 18);
 
-    targetRotateX = clamp(-betaDelta * 0.2, -maxMobileTilt, maxMobileTilt);
-targetRotateY = clamp(gammaDelta * 0.2, -maxMobileTilt, maxMobileTilt);
+    const xPercent = clamp(50 + gammaDelta * 1.8, 12, 88);
+    const yPercent = clamp(50 + betaDelta * 1.2, 12, 88);
+
+    tiltCards.forEach((card) => {
+      card.style.setProperty("--mouse-x", `${xPercent}%`);
+      card.style.setProperty("--mouse-y", `${yPercent}%`);
+      card.style.setProperty("--opposite-x", `${100 - xPercent}%`);
+      card.style.setProperty("--opposite-y", `${100 - yPercent}%`);
+
+      const shine = card.querySelector(".card-shine");
+
+      if (shine) {
+        shine.style.setProperty("--shine-x", `${100 - xPercent}%`);
+        shine.style.setProperty("--shine-y", `${100 - yPercent}%`);
+      }
+    });
   };
 
-  const startMotionTilt = async () => {
+  const startMotionHighlight = async () => {
     if (!supportsMotionTilt || prefersReducedMotion || !isTouchDevice()) {
       motionTiltToggle.textContent = "Motion Not Supported";
       motionTiltToggle.disabled = true;
@@ -455,49 +396,37 @@ targetRotateY = clamp(gammaDelta * 0.2, -maxMobileTilt, maxMobileTilt);
         passive: true,
       });
 
-      if (!animationFrame) {
-        animateMotionTilt();
-      }
-
-      motionTiltActive = true;
-      motionTiltToggle.textContent = "Motion Tilt On";
+      motionHighlightActive = true;
+      motionTiltToggle.textContent = "Motion Glow On";
       motionTiltToggle.setAttribute("aria-pressed", "true");
     } catch (error) {
-      console.error("Motion tilt permission error:", error);
+      console.error("Motion highlight permission error:", error);
       motionTiltToggle.textContent = "Motion Unavailable";
     }
   };
 
-  const stopMotionTilt = () => {
+  const stopMotionHighlight = () => {
     window.removeEventListener("deviceorientation", handleDeviceOrientation);
 
-    cancelAnimationFrame(animationFrame);
-    animationFrame = null;
-
-    targetRotateX = 0;
-    targetRotateY = 0;
-    currentRotateX = 0;
-    currentRotateY = 0;
     baseBeta = null;
     baseGamma = null;
+    lastSensorUpdate = 0;
 
     document.body.classList.remove("motion-tilt-active");
-    resetMotionCards();
+    resetGyroHighlight();
 
-    motionTiltActive = false;
-    motionTiltToggle.textContent = "Enable Motion Tilt";
+    motionHighlightActive = false;
+    motionTiltToggle.textContent = "Enable Motion Glow";
     motionTiltToggle.setAttribute("aria-pressed", "false");
   };
 
+  motionTiltToggle.textContent = "Enable Motion Glow";
+
   motionTiltToggle.addEventListener("click", () => {
-    if (motionTiltActive) {
-      stopMotionTilt();
+    if (motionHighlightActive) {
+      stopMotionHighlight();
     } else {
-      startMotionTilt();
+      startMotionHighlight();
     }
   });
-
-  if (!supportsMotionTilt || prefersReducedMotion) {
-    motionTiltToggle.style.display = "none";
-  }
 }
