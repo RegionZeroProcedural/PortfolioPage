@@ -75,28 +75,6 @@ body,
     filter 0.45s ease;
 }
 
-.site-video-bg,
-.site-bg-overlay,
-.bottom-page-gradient,
-.liquid-glass,
-.liquid-button,
-.site-header,
-.site-header.liquid-glass,
-.about-card,
-.skill-card,
-.project-card,
-.contact-form,
-.modal,
-.modal__half,
-.modal__language__card {
-  background-clip: padding-box;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-}
-
-body.theme-switching .liquid-refraction-canvas {
-  opacity: 0 !important;
-}
 
 html {
   scroll-behavior: smooth;
