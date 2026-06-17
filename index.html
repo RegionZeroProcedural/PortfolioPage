@@ -6,8 +6,19 @@
   <title>Keegan Labrot | Frontend Developer</title>
 
   <link rel="stylesheet" href="style.css" />
-  <script type="module" src="script.js" defer></script>
+
   <script src="https://kit.fontawesome.com/2fc9980094.js" crossorigin="anonymous"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+  <script>
+    emailjs.init({
+      publicKey: "kmnSqT_hgbVtqX5BR",
+    });
+  </script>
+
+  <script type="module" src="script.js" defer></script>
+  <script src="index.js" defer></script>
 </head>
 
 <body>
@@ -350,7 +361,7 @@
           <div class="modal__language__card">
             <i class="fa-brands fa-react"></i>
           </div>
-          
+
           <div class="modal__language__card">
             <i class="fa-brands fa-java"></i>
           </div>
@@ -374,20 +385,36 @@
         <h3 class="modal__title">Let's have a chat!</h3>
         <h4 class="modal__sub-title">I'm currently open to new opportunities.</h4>
 
-        <form class="modal__form">
+        <form class="modal__form" id="contactForm">
           <label for="modal-name">Name</label>
-          <input id="modal-name" type="text" required />
+          <input id="modal-name" name="user_name" type="text" required />
 
           <label for="modal-email">E-mail</label>
-          <input id="modal-email" type="email" required />
+          <input id="modal-email" name="user_email" type="email" required />
 
           <label for="modal-message">Message</label>
-          <textarea id="modal-message" required></textarea>
+          <textarea id="modal-message" name="message" required></textarea>
 
           <button class="modal__submit" type="submit">
             Send it my way
           </button>
         </form>
+
+        <div class="modal__overlay--loading modal__status" aria-hidden="true">
+          <div class="modal__spinner" aria-hidden="true"></div>
+        </div>
+
+        <div class="modal__overlay--success modal__status" aria-hidden="true">
+          <i class="fa-solid fa-check"></i>
+          <h3>Message sent!</h3>
+          <p>I’ll get back to you soon.</p>
+        </div>
+
+        <div class="modal__overlay--error modal__status" aria-hidden="true">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <h3>Message failed</h3>
+          <p>Please try again or email me directly.</p>
+        </div>
       </div>
     </div>
   </div>

@@ -1897,6 +1897,10 @@ body.modal-open .mobile-nav {
 .modal__language__card .fa-terminal { color: #8ec5ff; }
 .modal__language__card .fa-java { color: #ff9f43; }
 
+.modal__overlay--visible {
+  z-index: 1;
+}
+
 .modal__form {
   margin-top: 38px;
 
@@ -3021,4 +3025,168 @@ body.motion-tilt-active .project-card .card-shine {
     0 0 22px rgba(142, 197, 255, 0.24),
     0 18px 38px rgba(0, 0, 0, 0.28),
     inset 0 1px 1px rgba(255, 255, 255, 0.52);
+}
+
+.modal__contact {
+  position: relative;
+  overflow: hidden;
+}
+
+.modal__status {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+
+  background:
+    radial-gradient(circle at 50% 45%, rgba(142, 197, 255, 0.12), transparent 34%),
+    rgba(3, 7, 18, 0.88);
+
+  color: var(--text);
+  text-align: center;
+
+  backdrop-filter: blur(12px) saturate(1.12);
+  -webkit-backdrop-filter: blur(12px) saturate(1.12);
+
+  transition:
+    opacity 0.25s ease,
+    visibility 0.25s ease;
+}
+
+.modal__status.modal__overlay--visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.modal__spinner {
+  width: 58px;
+  height: 58px;
+
+  border: 6px solid rgba(255, 255, 255, 0.18);
+  border-top-color: var(--blue-bright);
+  border-radius: 50%;
+
+  animation: modalSpin 0.85s linear infinite;
+}
+
+@keyframes modalSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.modal__overlay--success i,
+.modal__overlay--error i {
+  width: 62px;
+  height: 62px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+  font-size: 2rem;
+}
+
+.modal__overlay--success i {
+  color: #06111f;
+  background: var(--blue-bright);
+  box-shadow: 0 0 24px rgba(142, 197, 255, 0.35);
+}
+
+.modal__overlay--error i {
+  color: #fff;
+  background: #ef4444;
+  box-shadow: 0 0 24px rgba(239, 68, 68, 0.35);
+}
+
+.modal__status h3 {
+  margin: 0;
+  font-size: 1.6rem;
+}
+
+.modal__status p {
+  max-width: 280px;
+  color: var(--text-soft);
+  line-height: 1.5;
+}
+
+.modal__submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  transform: none;
+}
+
+body.light-theme .modal__status {
+  background:
+    radial-gradient(circle at 50% 45%, rgba(20, 149, 255, 0.14), transparent 34%),
+    rgba(235, 246, 255, 0.88);
+
+  color: #06111f;
+}
+
+body.light-theme .modal__status p {
+  color: rgba(15, 23, 42, 0.72);
+}
+
+.modal__contact {
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.modal__status {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 999 !important;
+
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+
+  background: rgba(3, 7, 18, 0.94) !important;
+  color: var(--text);
+  text-align: center;
+
+  transition:
+    opacity 0.25s ease,
+    visibility 0.25s ease;
+}
+
+.modal__status.modal__overlay--visible {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+.modal__spinner {
+  width: 58px;
+  height: 58px;
+
+  border: 6px solid rgba(255, 255, 255, 0.18);
+  border-top-color: var(--blue-bright);
+  border-radius: 50%;
+
+  animation: modalSpin 0.85s linear infinite;
+}
+
+@keyframes modalSpin {
+  to {
+    transform: rotate(360deg);
+  }
 }
