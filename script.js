@@ -166,7 +166,14 @@ function updateThemeToggle() {
   );
 }
 
+let themeSwitchTimeout;
+
 function toggleDark() {
+  document.body.classList.add("theme-switching");
+
+  // Forces the browser to apply the temporary class before swapping themes.
+  document.body.offsetHeight;
+
   document.body.classList.toggle("light-theme");
 
   const isLight = document.body.classList.contains("light-theme");
@@ -174,6 +181,12 @@ function toggleDark() {
   localStorage.setItem("theme", isLight ? "light" : "dark");
 
   updateThemeToggle();
+
+  clearTimeout(themeSwitchTimeout);
+
+  themeSwitchTimeout = setTimeout(() => {
+    document.body.classList.remove("theme-switching");
+  }, 650);
 }
 
 if (darkToggleBtn) {

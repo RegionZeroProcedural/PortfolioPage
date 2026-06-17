@@ -48,13 +48,54 @@
   --transition-med: 0.25s ease;
   --theme-transition:
     color 0.45s ease,
-    background 0.45s ease,
-    background-color 0.45s ease,
     border-color 0.45s ease,
     box-shadow 0.45s ease,
     text-shadow 0.45s ease,
     opacity 0.45s ease,
     filter 0.45s ease;
+}
+
+body,
+.site-bg-overlay,
+.bottom-page-gradient,
+.site-header,
+.site-header.liquid-glass,
+.liquid-glass,
+.liquid-button,
+.contact-form,
+.modal,
+.modal__half,
+.modal__language__card {
+  transition:
+    color 0.45s ease,
+    border-color 0.45s ease,
+    box-shadow 0.45s ease,
+    text-shadow 0.45s ease,
+    opacity 0.45s ease,
+    filter 0.45s ease;
+}
+
+.site-video-bg,
+.site-bg-overlay,
+.bottom-page-gradient,
+.liquid-glass,
+.liquid-button,
+.site-header,
+.site-header.liquid-glass,
+.about-card,
+.skill-card,
+.project-card,
+.contact-form,
+.modal,
+.modal__half,
+.modal__language__card {
+  background-clip: padding-box;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+body.theme-switching .liquid-refraction-canvas {
+  opacity: 0 !important;
 }
 
 html {
