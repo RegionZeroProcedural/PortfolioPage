@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="30" height="14" viewBox="0 0 30 14" fill="none">
+  <defs>
+    <filter id="softGlow" x="-40%" y="-80%" width="180%" height="260%" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="0.55" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <path d="M2 9 L5.8 3 L10.4 9 L15 3 L20.4 9 L24.2 3 L28 9"
+        stroke="#62D6DF" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"
+        filter="url(#softGlow)"/>
+</svg>

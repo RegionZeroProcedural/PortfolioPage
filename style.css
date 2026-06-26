@@ -113,9 +113,12 @@ section {
 }
 
 main,
-.site-footer {
+.site-footer,
+.hero-content,
+.hero-profile,
+.scroll__btn {
   position: relative;
-  z-index: 2;
+  z-index: 3;
 }
 
 .orange {
@@ -3138,3 +3141,83 @@ body.light-theme .modal__status p {
     transform: rotate(360deg);
   }
 }
+
+/*
+
+  SHAPES
+
+  shapes on the first row: 35vh
+  shapes on the first row: 70vh
+  shapes on the first row: 95vh
+
+  shapes on the first col: 5vw
+  shapes on the second col: 50vw
+  shapes on the third col: 80vw
+*/
+
+.background__shapes__container {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.shape {
+  position: fixed;
+  width: clamp(28px, 4vw, 70px);
+  height: auto;
+  opacity: 0.25;
+  pointer-events: none;
+  filter: drop-shadow(0 0 4px currentColor);
+  z-index: 0;
+  transition: 0.25s ease-out;
+}
+
+/* row 1 */
+.shape--0 {
+  top: 15vh;
+  left: 5vw;
+}
+
+.shape--1 {
+  top: 15vh;
+  left: 50vw;
+}
+
+.shape--2 {
+  top: 15vh;
+  left: 80vw;
+}
+
+/* row 2 */
+.shape--3 {
+  top: 55vh;
+  left: 5vw;
+}
+
+.shape--4 {
+  top: 55vh;
+  left: 50vw;
+}
+
+.shape--5 {
+  top: 55vh;
+  left: 80vw;
+}
+
+/* row 3 */
+.shape--6 {
+  top: 90vh;
+  left: 5vw;
+}
+
+.shape--7 {
+  top: 90vh;
+  left: 50vw;
+}
+
+.shape--8 {
+  top: 90vh;
+  left: 80vw;
+}
+
