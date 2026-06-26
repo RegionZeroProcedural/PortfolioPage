@@ -375,6 +375,7 @@ if (tiltCards.length && motionTiltToggle) {
       motionTiltToggle.disabled = true;
       return;
     }
+    
 
     try {
       if (typeof DeviceOrientationEvent.requestPermission === "function") {
@@ -393,6 +394,9 @@ if (tiltCards.length && motionTiltToggle) {
       document.body.classList.add("motion-tilt-active");
 
       window.addEventListener("deviceorientation", handleDeviceOrientation, {
+        passive: true,
+      });
+      window.addEventListener("deviceorientation", handleBackgroundOrientation, {
         passive: true,
       });
 
@@ -429,4 +433,55 @@ if (tiltCards.length && motionTiltToggle) {
       startMotionHighlight();
     }
   });
+}
+
+/* Background shapes mouse + device orientation movement */
+const backgroundShapes = document.querySelectorAll(".shape");
+
+let bgBaseBeta = null;
+let bgBaseGamma = null;
+let bgLastSensorUpdate = 0;
+
+const clampValue = (value, min, max) => {
+  return Math.min(Math.max(value, min), max);
+};
+
+function moveBackgroundShapes(x, y) {
+  backgroundShapes.forEach((shape, index) => {
+    const direction = index % 2 === 0 ? 1 : -1;
+
+    shape.style.transform = `
+      translate(${x * direction}px, ${y * direction}px)
+    `;
+  });
+}
+
+/* Desktop mouse movement */
+window.addEventListener("mousemove", (event) => {
+  const x = event.clientX - window.innerWidth / 2;
+  const y = event.clientY - window.innerHeight / 2;
+
+  moveBackgroundShapes(x * 0.04, y * 0.04);
+});
+
+/* Mobile device orientation movement */
+function handleBackgroundOrientation(event) {
+  const now = performance.now();
+
+  if (now - bgLastSensorUpdate < 33) return;
+  bgLastSensorUpdate = now;
+
+  if (typeof event.beta !== "number" || typeof event.gamma !== "number") {
+    return;
+  }
+
+  if (bgBaseBeta === null || bgBaseGamma === null) {
+    bgBaseBeta = event.beta;
+    bgBaseGamma = event.gamma;
+  }
+
+  const betaDelta = clampValue(event.beta - bgBaseBeta, -20, 20);
+  const gammaDelta = clampValue(event.gamma - bgBaseGamma, -20, 20);
+
+  moveBackgroundShapes(gammaDelta * 2, betaDelta * 2);
 }
