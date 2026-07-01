@@ -186,6 +186,50 @@ main,
   display: none;
 }
 
+/***********************************
+*
+*  Social icons above Hero buttons
+*
+***********************************/
+
+.social__icon {
+  width: 28px;
+  height: 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 50%;
+  overflow: hidden;
+
+  color: #f8fbff;
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.08);
+
+  position: relative;
+
+  transition: all 0.3s ease;
+}
+
+.small__socials {
+  margin-bottom: 25px;
+  margin-left: 10px;
+  display: flex;
+  flex-direction: row;
+}
+
+.small__socials a {
+  margin-right: 10px;
+  text-decoration: none;
+}
+
+.small__socials a i {
+  border-radius: 50%;
+  overflow: hidden;
+}
+
 /* =========================
    03. SHARED GLASS SYSTEM
 ========================= */
@@ -697,7 +741,7 @@ main,
 
   width: 15px;
   height: 30px;
-  margin: 7.5vh 45vw;
+  margin: 7.5vh 40vw;
 
   border: 2px solid #252525;
   border-radius: 10px;
@@ -2077,6 +2121,10 @@ body,
 /* =========================
    16. LIGHT THEME
 ========================= */
+
+body.light-theme .social__icon {
+  color: #252525;
+}
 
 body.light-theme {
   --text: #06111f;

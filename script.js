@@ -183,6 +183,7 @@ if (darkToggleBtn) {
 
 document.body.classList.add("js-enabled");
 
+/* Section fade */
 const fadeElements = document.querySelectorAll(".section, .site-footer");
 
 const fadeObserver = new IntersectionObserver(
@@ -295,7 +296,60 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
-/* Mobile gyro highlight only */
+/* Background shapes mouse + device orientation movement */
+const backgroundShapes = document.querySelectorAll(".shape");
+
+let bgBaseBeta = null;
+let bgBaseGamma = null;
+let bgLastSensorUpdate = 0;
+
+const clampValue = (value, min, max) => {
+  return Math.min(Math.max(value, min), max);
+};
+
+function moveBackgroundShapes(x, y) {
+  backgroundShapes.forEach((shape, index) => {
+    const direction = index % 2 === 0 ? 1 : -1;
+
+    shape.style.transform = `
+      translate(${x * direction}px, ${y * direction}px)
+    `;
+  });
+}
+
+/* Desktop mouse movement */
+window.addEventListener("mousemove", (event) => {
+  if (document.body.classList.contains("motion-tilt-active")) return;
+
+  const x = event.clientX - window.innerWidth / 2;
+  const y = event.clientY - window.innerHeight / 2;
+
+  moveBackgroundShapes(x * 0.04, y * 0.04);
+});
+
+/* Mobile device orientation movement */
+function handleBackgroundOrientation(event) {
+  const now = performance.now();
+
+  if (now - bgLastSensorUpdate < 33) return;
+  bgLastSensorUpdate = now;
+
+  if (typeof event.beta !== "number" || typeof event.gamma !== "number") {
+    return;
+  }
+
+  if (bgBaseBeta === null || bgBaseGamma === null) {
+    bgBaseBeta = event.beta;
+    bgBaseGamma = event.gamma;
+  }
+
+  const betaDelta = clampValue(event.beta - bgBaseBeta, -20, 20);
+  const gammaDelta = clampValue(event.gamma - bgBaseGamma, -20, 20);
+
+  moveBackgroundShapes(gammaDelta * 2, betaDelta * 2);
+}
+
+/* Mobile gyro highlight + background shape motion */
 const motionTiltToggle = document.querySelector("#motionTiltToggle");
 
 if (tiltCards.length && motionTiltToggle) {
@@ -375,7 +429,6 @@ if (tiltCards.length && motionTiltToggle) {
       motionTiltToggle.disabled = true;
       return;
     }
-    
 
     try {
       if (typeof DeviceOrientationEvent.requestPermission === "function") {
@@ -391,11 +444,16 @@ if (tiltCards.length && motionTiltToggle) {
       baseGamma = null;
       lastSensorUpdate = 0;
 
+      bgBaseBeta = null;
+      bgBaseGamma = null;
+      bgLastSensorUpdate = 0;
+
       document.body.classList.add("motion-tilt-active");
 
       window.addEventListener("deviceorientation", handleDeviceOrientation, {
         passive: true,
       });
+
       window.addEventListener("deviceorientation", handleBackgroundOrientation, {
         passive: true,
       });
@@ -411,10 +469,15 @@ if (tiltCards.length && motionTiltToggle) {
 
   const stopMotionHighlight = () => {
     window.removeEventListener("deviceorientation", handleDeviceOrientation);
+    window.removeEventListener("deviceorientation", handleBackgroundOrientation);
 
     baseBeta = null;
     baseGamma = null;
     lastSensorUpdate = 0;
+
+    bgBaseBeta = null;
+    bgBaseGamma = null;
+    bgLastSensorUpdate = 0;
 
     document.body.classList.remove("motion-tilt-active");
     resetGyroHighlight();
@@ -422,6 +485,8 @@ if (tiltCards.length && motionTiltToggle) {
     motionHighlightActive = false;
     motionTiltToggle.textContent = "Enable Motion Glow";
     motionTiltToggle.setAttribute("aria-pressed", "false");
+
+    moveBackgroundShapes(0, 0);
   };
 
   motionTiltToggle.textContent = "Enable Motion Glow";
@@ -433,55 +498,13 @@ if (tiltCards.length && motionTiltToggle) {
       startMotionHighlight();
     }
   });
-}
 
-/* Background shapes mouse + device orientation movement */
-const backgroundShapes = document.querySelectorAll(".shape");
-
-let bgBaseBeta = null;
-let bgBaseGamma = null;
-let bgLastSensorUpdate = 0;
-
-const clampValue = (value, min, max) => {
-  return Math.min(Math.max(value, min), max);
-};
-
-function moveBackgroundShapes(x, y) {
-  backgroundShapes.forEach((shape, index) => {
-    const direction = index % 2 === 0 ? 1 : -1;
-
-    shape.style.transform = `
-      translate(${x * direction}px, ${y * direction}px)
-    `;
-  });
-}
-
-/* Desktop mouse movement */
-window.addEventListener("mousemove", (event) => {
-  const x = event.clientX - window.innerWidth / 2;
-  const y = event.clientY - window.innerHeight / 2;
-
-  moveBackgroundShapes(x * 0.04, y * 0.04);
-});
-
-/* Mobile device orientation movement */
-function handleBackgroundOrientation(event) {
-  const now = performance.now();
-
-  if (now - bgLastSensorUpdate < 33) return;
-  bgLastSensorUpdate = now;
-
-  if (typeof event.beta !== "number" || typeof event.gamma !== "number") {
-    return;
+  /* Auto-start motion tilt where browsers allow it */
+  if (supportsMotionTilt && !prefersReducedMotion && isTouchDevice()) {
+    if (typeof DeviceOrientationEvent.requestPermission === "function") {
+      motionTiltToggle.textContent = "Tap to Allow Motion";
+    } else {
+      startMotionHighlight();
+    }
   }
-
-  if (bgBaseBeta === null || bgBaseGamma === null) {
-    bgBaseBeta = event.beta;
-    bgBaseGamma = event.gamma;
-  }
-
-  const betaDelta = clampValue(event.beta - bgBaseBeta, -20, 20);
-  const gammaDelta = clampValue(event.gamma - bgBaseGamma, -20, 20);
-
-  moveBackgroundShapes(gammaDelta * 2, betaDelta * 2);
 }
