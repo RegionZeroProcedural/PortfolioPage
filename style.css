@@ -193,8 +193,8 @@ main,
 ***********************************/
 
 .social__icon {
-  width: 28px;
-  height: 28px;
+  width: 42px;
+  height: 42px;
 
   display: flex;
   align-items: center;
@@ -209,29 +209,33 @@ main,
   background: rgba(255, 255, 255, 0.08);
 
   position: relative;
+  margin-top: 15px;
 
   transition: all 0.3s ease;
 }
 
 .social__icon:hover {
   transform: translateY(-3px);
+  border-color: rgba(191, 228, 255, 0.9);
+  box-shadow:
+    0 0 18px rgba(142, 197, 255, 0.32),
+    inset 0 1px 1px rgba(255, 255, 255, 0.35);
 }
 
 .small__socials {
-  margin-bottom: 25px;
-  margin-left: 10px;
+  margin-bottom: 18px;
+  margin-left: 13px;
   display: flex;
   flex-direction: row;
+
 }
 
 .small__socials a {
   margin-right: 10px;
   text-decoration: none;
-}
-
-.small__socials a i {
-  border-radius: 50%;
-  overflow: hidden;
+  font-size: 1.3rem;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.55);
 }
 
 /* =========================
